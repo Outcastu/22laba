@@ -19,30 +19,25 @@ void ex2() {
 	printf("ЛР22 Задача 2.2\n");
 	int a, b, c;
 	int p;
+
 	// Входной файл
-	FILE* fin = fopen("F:\\уник\\ОА и П\\Labs\\laba22\\in2.txt", "rt");
+	FILE* fin = fopen("F:\\текстовые файлы\\laba22\\in2.txt", "r+");
 	if (fin == NULL) {
 		printf("Входной файл не найден");
 		return;
 	}
+
 	fscanf(fin, "%d%d%d", &a, &b, &c);
-	fclose(fin);
-	// логирование ввода
 	printf("ввели: %d, %d, %d\n", a, b, c);
-	// Обработка
+
 	p = a * b * c;
-	// логирование вывода
+
 	printf("p =  %d\n", p);
-	// Запись в выходной файл
-	// Выходной файл
-	FILE* fout;
-	fout = fopen("F:\\уник\\ОА и П\\Labs\\laba22\\out2.txt", "wt");
-	if (fout == NULL) {
-		printf("Выходной файл не создался");
-		return;
-	}
-	fprintf(fout, "%d", p);
-	fclose(fout);
+
+	fseek(fin, 0, SEEK_END);
+	fprintf(fin, "\np = %d\n", p);
+
+	fclose(fin);
 }
 void ex3() {
 	printf("ЛР22 Задача 3.1\n");
@@ -54,24 +49,56 @@ void ex3() {
 	p = a + b + c + d + e;
 	printf("p=%d\n", p);
 }
-void ex4() {
-	int a[10];
-	int n;//кол-во загруженных файлов
-	int i; //счетчик для обхода эл-ов массива
-	FILE* fin = fopen("F:\\уник\\ОА и П\\Labs\\laba22\\in4.txt", "rt");
+void ex3_1() {
+	printf("ЛР22 Задача 3.2\n");
+	int a, b, c, d, e;
+	int p;
+
+	// Открываем файл для чтения и записи
+	FILE* fin = fopen("F:\\текстовые файлы\\laba22\\in3.txt", "r+");
 	if (fin == NULL) {
 		printf("Входной файл не найден");
 		return;
 	}
+
+	// Читаем данные из файла
+	fscanf(fin, "%d%d%d%d%d", &a, &b, &c, &d, &e);
+	// логирование ввода
+	printf("ввели: %d, %d, %d, %d, %d\n", a, b, c, d, e);
+
+	// Обработка
+	p = a + b + c + d + e;
+
+	// логирование вывода
+	printf("p = %d\n", p);
+
+	// Перемещаем указатель в конец файла для записи результата
+	fseek(fin, 0, SEEK_END);
+	fprintf(fin, "\np = %d\n", p); 
+
+	fclose(fin);
+}
+void ex4() {
+	int a[10];
+	int n; //кол-во загруженных файлов
+	int i; //счетчик для обхода эл-ов массива
+	FILE* fin = fopen("F:\\текстовые файлы\\laba22\\in4.txt", "r+");
+	if (fin == NULL) {
+		printf("Входной файл не найден");
+		return;
+	}
+
 	fscanf(fin, "%d", &n);
 	for (i = 0; i < n; i++) {
 		fscanf(fin, "%d", &a[i]);
 	}
 	fclose(fin);
+
 	printf("Ввели массив a[%d] = ", n);
 	for (i = 0; i < n; i++) {
 		printf("%d ", a[i]);
 	}
+
 	int s = 0;
 	for (i = 0; i < n; i++) {
 		s += a[i];
@@ -79,52 +106,67 @@ void ex4() {
 	printf("\n");
 	float sa = (float)s / n;
 	printf("sa = %f\n", sa);
+
 	for (i = 0; i < n; i++) {
 		if (a[i] > sa) {
 			a[i] *= 10;
 		}
 	}
+
 	printf("Вывели массив a[%d] = ", n);
 	for (i = 0; i < n; i++) {
 		printf("%d ", a[i]);
 	}
-	FILE* fout;
-	fout = fopen("F:\\уник\\ОА и П\\Labs\\laba22\\out4.txt", "wt");
-	if (fout == NULL) {
+
+	// Запись в тот же файл
+	fin = fopen("F:\\текстовые файлы\\laba22\\in4.txt", "r+");
+	if (fin == NULL) {
 		printf("Выходной файл не создался");
 		return;
 	}
-	fprintf(fout, "%d\n", n);
+
+	fseek(fin, 0, SEEK_END); // Перемещаем указатель в конец файла
+	fprintf(fin, "\nИзмененный массив: ");
 	for (i = 0; i < n; i++) {
-		fprintf(fout, "%d ", a[i]);
+		fprintf(fin, "%d ", a[i]);
 	}
-	fclose(fout);
+
+	fclose(fin);
 }
 void ex5() {
 	int a[10];
-	int n;//кол-во загруженных файлов
-	int i; //счетчик для обхода эл-ов массива
-	FILE* fin = fopen("F:\\уник\\ОА и П\\Labs\\laba22\\in5.txt", "rt");
+	int n; // количество загруженных файлов
+	int i; // счетчик для обхода эл-ов массива
+
+	// Открываем файл для чтения и записи
+	FILE* fin = fopen("F:\\текстовые файлы\\laba22\\in5.txt", "r+");
 	if (fin == NULL) {
 		printf("Входной файл не найден");
 		return;
 	}
+
+	// Читаем количество элементов
 	fscanf(fin, "%d", &n);
 	for (i = 0; i < n; i++) {
 		fscanf(fin, "%d", &a[i]);
 	}
 	fclose(fin);
+
+	// Логирование ввода
 	printf("Ввели массив a[%d] = ", n);
 	for (i = 0; i < n; i++) {
 		printf("%d ", a[i]);
 	}
+	printf("\n");
+
 	int s = 0;
 	for (i = 0; i < n; i++) {
 		s += a[i];
 	}
-	printf("\n");
 	float sa = (float)s / n;
 	printf("sa = %f\n", sa);
+
+	// Обработка массива
 	for (i = 0; i < n; i++) {
 		if (a[i] % 2 == 0) {
 			if (a[i] < sa) {
@@ -132,27 +174,34 @@ void ex5() {
 			}
 		}
 	}
+
+	// Логирование вывода
 	printf("Вывели массив a[%d] = ", n);
 	for (i = 0; i < n; i++) {
 		printf("%d ", a[i]);
 	}
-	FILE* fout;
-	fout = fopen("F:\\уник\\ОА и П\\Labs\\laba22\\out5.txt", "wt");
-	if (fout == NULL) {
+	printf("\n");
+
+	// Запись в тот же файл
+	fin = fopen("F:\\текстовые файлы\\laba22\\in5.txt", "r+");
+	if (fin == NULL) {
 		printf("Выходной файл не создался");
 		return;
 	}
-	fprintf(fout, "%d\n", n);
+
+	// Перемещаем указатель в конец файла для записи результата
+	fseek(fin, 0, SEEK_END); // Перемещаем указатель в конец файла
+	fprintf(fin, "\nИзмененный массив: ");
 	for (i = 0; i < n; i++) {
-		fprintf(fout, "%d ", a[i]);
+		fprintf(fin, "%d ", a[i]);
 	}
-	fclose(fout);
-}
-void HW() {
+
+	fclose(fin);
+}void HW() {
 	int a[10];
 	int n;//кол-во загруженных файлов
 	int i; //счетчик для обхода эл-ов массива
-	FILE* fin = fopen("F:\\уник\\ОА и П\\Labs\\laba22\\in6.txt", "rt");
+	FILE* fin = fopen("F:\\текстовые файлы\\laba22\\in6.txt", "rt");
 	if (fin == NULL) {
 		printf("Входной файл не найден");
 		return;
@@ -178,7 +227,7 @@ void HW() {
 	}
 	printf("\n");
 	FILE* fout;
-	fout = fopen("F:\\уник\\ОА и П\\Labs\\laba22\\out6.txt", "wt");
+	fout = fopen("F:\\текстовые файлы\\laba22\\out6.txt", "wt");
 	if (fout == NULL) {
 	printf("Выходной файл не создался");
 	return;
@@ -192,5 +241,10 @@ void HW() {
 void main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
+	ex1();
+	ex2();
 	ex3();
+	ex3_1();
+	ex4();
+	ex5();
 }
