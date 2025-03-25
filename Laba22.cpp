@@ -197,46 +197,6 @@ void ex5() {
 	}
 
 	fclose(fin);
-}void HW() {
-	int a[10];
-	int n;//кол-во загруженных файлов
-	int i; //счетчик для обхода эл-ов массива
-	FILE* fin = fopen("F:\\текстовые файлы\\laba22\\in6.txt", "rt");
-	if (fin == NULL) {
-		printf("Входной файл не найден");
-		return;
-	}
-	fscanf(fin, "%d", &n);
-	for (i = 0; i < n; i++) {
-		fscanf(fin, "%d", &a[i]);
-	}
-	fclose(fin);
-	printf("Ввели массив a[%d] = ", n);
-	for (i = 0; i < n; i++) {
-		printf("%d ", a[i]);
-	}
-	printf("\n");
-	for (int i = 0; i < n; i++) {
-		if (a[i] % 2 == 1) {
-			a[i] *= 10;
-		}
-	}
-	printf("Вывели массив a[%d] = ", n);
-	for (i = 0; i < n; i++) {
-		printf("%d ", a[i]);
-	}
-	printf("\n");
-	FILE* fout;
-	fout = fopen("F:\\текстовые файлы\\laba22\\out6.txt", "wt");
-	if (fout == NULL) {
-	printf("Выходной файл не создался");
-	return;
-	}
-	fprintf(fout, "%d\n", n);
-	for (i = 0; i < n; i++) {
-		fprintf(fout, "%d ", a[i]);
-	}
-	fclose(fout);
 }
 void main() {
 	SetConsoleCP(1251);
